@@ -18,17 +18,17 @@ const apikey = async (req, res, next) => {
         }
       }
   */
-  const reqApiKey = req.header('access-token') // MODIFIED: Changed 'api_key' to 'access-token'
+  const reqApiKey = req.header('access-token') // MODIFIED: Changed 'Access Token' to 'access-token'
 
   // Log untuk debugging
-  console.log('----- API Key Check -----')
-  console.log('Configured API Key (from .env via config):', globalApiKey)
-  console.log('Received API Key Header (from request - access-token):', reqApiKey) // MODIFIED: Updated log message
+  console.log('----- Access Token Check -----')
+  console.log('Configured Access Token:', globalApiKey)
+  console.log('Received Access Token Header:', reqApiKey)
   console.log('-------------------------')
 
   if (globalApiKey && globalApiKey !== reqApiKey) {
-    console.log('API Key mismatch! Blocking request.') // ambahan log
-    return res.status(401).json({ success: false, error: 'Invalid API key' })
+    console.log('Access Token mismatch! Blocking request.') // Tambahan log
+    return res.status(401).json({ success: false, error: 'Invalid Access Token' })
   }
   next()
 }

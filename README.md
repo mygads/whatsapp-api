@@ -88,7 +88,7 @@ docker-compose pull && docker-compose up
 
 3. Handle multiple client sessions (session data saved locally), identified by unique id
 
-4. All endpoints may be secured by a global API key
+4. All endpoints may be secured by a global Access Token
 
 5. On server start, all existing sessions are restored
 

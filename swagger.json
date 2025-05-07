@@ -7920,7 +7920,7 @@
           },
           "error": {
             "type": "string",
-            "example": "Invalid API key"
+            "example": "Invalid Access Token"
           }
         },
         "xml": {

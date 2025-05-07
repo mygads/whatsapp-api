@@ -72,7 +72,7 @@ const doc = {
     },
     ForbiddenResponse: {
       success: false,
-      error: 'Invalid API key'
+      error: 'Invalid Access Token'
     }
   }
 }
