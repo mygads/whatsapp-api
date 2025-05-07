@@ -18,12 +18,12 @@ const apikey = async (req, res, next) => {
         }
       }
   */
-  const reqApiKey = req.header('api_key')
+  const reqApiKey = req.header('access-token') // MODIFIED: Changed 'api_key' to 'access-token'
 
   // Log untuk debugging
   console.log('----- API Key Check -----')
   console.log('Configured API Key (from .env via config):', globalApiKey)
-  console.log('Received API Key Header (from request):', reqApiKey)
+  console.log('Received API Key Header (from request - access-token):', reqApiKey) // MODIFIED: Updated log message
   console.log('-------------------------')
 
   if (globalApiKey && globalApiKey !== reqApiKey) {

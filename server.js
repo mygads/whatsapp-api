@@ -11,6 +11,7 @@ if (!baseWebhookURL) {
   process.exit(1) // Terminate the application with an error code
 }
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`)
+app.listen(port, '::', () => {
+  console.log(`Server running on port ${port} with dual stack`)
+  console.log(`BASE_WEBHOOK_URL: ${baseWebhookURL}`)
 })

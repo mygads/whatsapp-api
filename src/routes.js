@@ -44,6 +44,7 @@ sessionRouter.get('/restart/:sessionId', middleware.sessionNameValidation, sessi
 sessionRouter.get('/terminate/:sessionId', middleware.sessionNameValidation, sessionController.terminateSession)
 sessionRouter.get('/terminateInactive', sessionController.terminateInactiveSessions)
 sessionRouter.get('/terminateAll', sessionController.terminateAllSessions)
+sessionRouter.get('/listAll', sessionController.listAllSessions) // Added new route for listing all sessions
 
 /**
  * ================

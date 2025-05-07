@@ -22,7 +22,7 @@ const doc = {
     apiKeyAuth: {
       type: 'apiKey',
       in: 'header',
-      name: 'x-api-key'
+      name: 'access-token' // MODIFIED: Changed 'api-key' to 'access-token'
     }
   },
   produces: ['application/json'],

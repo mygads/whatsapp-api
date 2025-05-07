@@ -363,6 +363,62 @@ const terminateAllSessions = async (req, res) => {
   }
 }
 
+/**
+ * List all active sessions.
+ *
+ * @function
+ * @async
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<void>}
+ * @throws {Error} If there was an error retrieving the sessions.
+ */
+const listAllSessions = async (req, res) => {
+  // #swagger.summary = 'List all active sessions'
+  // #swagger.description = 'Retrieves a list of all currently active session IDs and their status.'
+  try {
+    const activeSessions = []
+    if (sessions.size > 0) {
+      for (const sessionId of sessions.keys()) {
+        const validation = await validateSession(sessionId)
+        activeSessions.push({
+          sessionId,
+          status: validation.state,
+          message: validation.message
+        })
+      }
+    }
+    /* #swagger.responses[200] = {
+      description: "A list of active sessions and their statuses.",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              success: { type: "boolean" },
+              sessions: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    sessionId: { type: "string" },
+                    status: { type: "string", nullable: true },
+                    message: { type: "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    */
+    res.status(200).json({ success: true, sessions: activeSessions })
+  } catch (error) {
+    sendErrorResponse(res, 500, error.message)
+  }
+}
+
 module.exports = {
   startSession,
   statusSession,
@@ -371,5 +427,6 @@ module.exports = {
   restartSession,
   terminateSession,
   terminateInactiveSessions,
-  terminateAllSessions
+  terminateAllSessions,
+  listAllSessions
 }
