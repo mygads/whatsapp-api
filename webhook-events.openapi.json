@@ -1,0 +1,205 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WhatsApp Webhook Events",
+    "version": "1.0.0",
+    "description": "Dokumentasi event webhook yang dikirim oleh WhatsApp API custom Anda. Setiap event akan dikirim ke URL webhook yang dikonfigurasi, dengan payload sesuai event yang terjadi."
+  },
+  "servers": [
+    { "url": "http://localhost:8080" }
+  ],
+  "paths": {
+    "/webhook/{event}": {
+      "post": {
+        "summary": "Webhook Event Receiver (Contoh untuk dokumentasi)",
+        "description": "Endpoint dummy untuk dokumentasi event webhook WhatsApp. Ganti `event` dengan nama event webhook yang sebenarnya.",
+        "parameters": [
+          {
+            "name": "event",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Nama event webhook (misal: message, qr, ready, dsb)"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  { "$ref": "#/components/schemas/AuthFailure" },
+                  { "$ref": "#/components/schemas/Call" },
+                  { "$ref": "#/components/schemas/ChangeState" },
+                  { "$ref": "#/components/schemas/Disconnected" },
+                  { "$ref": "#/components/schemas/GroupNotification" },
+                  { "$ref": "#/components/schemas/LoadingScreen" },
+                  { "$ref": "#/components/schemas/MediaUploaded" },
+                  { "$ref": "#/components/schemas/Message" },
+                  { "$ref": "#/components/schemas/Media" },
+                  { "$ref": "#/components/schemas/MessageAck" },
+                  { "$ref": "#/components/schemas/MessageCreate" },
+                  { "$ref": "#/components/schemas/MessageReaction" },
+                  { "$ref": "#/components/schemas/MessageEdit" },
+                  { "$ref": "#/components/schemas/MessageCiphertext" },
+                  { "$ref": "#/components/schemas/MessageRevokeEveryone" },
+                  { "$ref": "#/components/schemas/MessageRevokeMe" },
+                  { "$ref": "#/components/schemas/Qr" },
+                  { "$ref": "#/components/schemas/ContactChanged" },
+                  { "$ref": "#/components/schemas/ChatRemoved" },
+                  { "$ref": "#/components/schemas/ChatArchived" },
+                  { "$ref": "#/components/schemas/UnreadCount" }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Webhook event received"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthFailure": {
+        "type": "object",
+        "properties": {
+          "msg": { "type": "string" }
+        }
+      },
+      "Call": {
+        "type": "object",
+        "properties": {
+          "call": { "type": "object" }
+        }
+      },
+      "ChangeState": {
+        "type": "object",
+        "properties": {
+          "state": { "type": "string" }
+        }
+      },
+      "Disconnected": {
+        "type": "object",
+        "properties": {
+          "reason": { "type": "string" }
+        }
+      },
+      "GroupNotification": {
+        "type": "object",
+        "properties": {
+          "notification": { "type": "object" }
+        }
+      },
+      "LoadingScreen": {
+        "type": "object",
+        "properties": {
+          "percent": { "type": "number" },
+          "message": { "type": "string" }
+        }
+      },
+      "MediaUploaded": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" }
+        }
+      },
+      "Media": {
+        "type": "object",
+        "properties": {
+          "messageMedia": { "type": "object" },
+          "message": { "type": "object" }
+        }
+      },
+      "MessageAck": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" },
+          "ack": { "type": "integer" }
+        }
+      },
+      "MessageCreate": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" }
+        }
+      },
+      "MessageReaction": {
+        "type": "object",
+        "properties": {
+          "reaction": { "type": "object" }
+        }
+      },
+      "MessageEdit": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" },
+          "newBody": { "type": "string" },
+          "prevBody": { "type": "string" }
+        }
+      },
+      "MessageCiphertext": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" }
+        }
+      },
+      "MessageRevokeEveryone": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" }
+        }
+      },
+      "MessageRevokeMe": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" }
+        }
+      },
+      "Qr": {
+        "type": "object",
+        "properties": {
+          "qr": { "type": "string" }
+        }
+      },
+      "ContactChanged": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "object" },
+          "oldId": { "type": "string" },
+          "newId": { "type": "string" },
+          "isContact": { "type": "boolean" }
+        }
+      },
+      "ChatRemoved": {
+        "type": "object",
+        "properties": {
+          "chat": { "type": "object" }
+        }
+      },
+      "ChatArchived": {
+        "type": "object",
+        "properties": {
+          "chat": { "type": "object" },
+          "currState": { "type": "string" },
+          "prevState": { "type": "string" }
+        }
+      },
+      "UnreadCount": {
+        "type": "object",
+        "properties": {
+          "chat": { "type": "object" }
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,23 @@ const { sendErrorResponse } = require('./utils')
 const { validateSession } = require('./sessions')
 const rateLimiting = require('express-rate-limit')
 
+const requestLogger = (req, res, next) => {
+  const timestamp = new Date().toISOString()
+  const method = req.method
+  const url = req.originalUrl || req.url
+  const ip = req.ip || req.connection.remoteAddress || req.socket.remoteAddress
+  const userAgent = req.get('User-Agent') || 'Unknown'
+
+  console.log(`[${timestamp}] ${method} ${url} - IP: ${ip} - User-Agent: ${userAgent}`)
+
+  // Log request body untuk POST/PUT/PATCH (hanya untuk debugging, hati-hati dengan data sensitif)
+  if (['POST', 'PUT', 'PATCH'].includes(method) && req.body && Object.keys(req.body).length > 0) {
+    console.log(`[${timestamp}] Request Body:`, JSON.stringify(req.body, null, 2))
+  }
+
+  next()
+}
+
 const apikey = async (req, res, next) => {
   /*
     #swagger.security = [{
@@ -21,10 +38,10 @@ const apikey = async (req, res, next) => {
   const reqApiKey = req.header('access-token') // MODIFIED: Changed 'Access Token' to 'access-token'
 
   // Log untuk debugging
-  console.log('----- Access Token Check -----')
-  console.log('Configured Access Token:', globalApiKey)
-  console.log('Received Access Token Header:', reqApiKey)
-  console.log('-------------------------')
+  // console.log('----- Access Token Check -----')
+  // console.log('Configured Access Token:', globalApiKey)
+  // console.log('Received Access Token Header:', reqApiKey)
+  // console.log('-------------------------')
 
   if (globalApiKey && globalApiKey !== reqApiKey) {
     console.log('Access Token mismatch! Blocking request.') // Tambahan log
@@ -190,5 +207,6 @@ module.exports = {
   messageSwagger,
   chatSwagger,
   groupChatSwagger,
-  rateLimiter
+  rateLimiter,
+  requestLogger
 }

@@ -141,3 +141,78 @@ const waitForFileNotToBeEmpty = (filePath, maxWaitTime = 10000, interval = 100) 
     checkObject()
   })
 }
+
+const MOCK_API_KEY = 'your-actual-api-key' // Ganti dengan API key yang valid untuk pengujian
+const TARGET_CHAT_ID = '1234567890@c.us' // GANTI DENGAN CHAT ID TARGET YANG VALID UNTUK PENGUJIAN
+
+describe('Client Endpoints - Media and Polls', () => {
+  const sessionId = 'test-media-poll-session'
+
+  beforeAll(async () => {
+    // Pastikan server berjalan jika app tidak langsung listen
+    // Inisialisasi sesi untuk pengujian
+    const res = await request(app)
+      .get(`/session/start/${sessionId}`)
+      .set('access-token', MOCK_API_KEY)
+    if (res.body.success !== true && res.body.state !== 'CONNECTED') {
+      // Tunggu QR atau status terkoneksi jika diperlukan, atau mock
+      // Untuk pengujian otomatis, Anda mungkin perlu mem-mock respons dari setupSession
+      console.warn(`Session ${sessionId} may not be ready: ${res.body.message || res.body.state}`)
+    }
+    // Beri sedikit waktu untuk sesi siap jika ini adalah interaksi nyata
+    // await new Promise(resolve => setTimeout(resolve, 5000)); // Hapus atau sesuaikan
+  })
+
+  it('should send an image message', async () => {
+    // Contoh data base64 untuk gambar 1x1 pixel PNG transparan
+    const smallPngBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='
+    const res = await request(app)
+      .post(`/client/sendMessage/${sessionId}`)
+      .set('access-token', MOCK_API_KEY)
+      .send({
+        chatId: TARGET_CHAT_ID,
+        contentType: 'MessageMedia',
+        content: {
+          mimetype: 'image/png',
+          data: smallPngBase64,
+          filename: 'test-image.png'
+        }
+      })
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.success).toBe(true)
+    expect(res.body.message.body).toBeUndefined() // Pesan media biasanya tidak memiliki body teks utama
+    expect(res.body.message.type).toBe('image')
+    expect(res.body.message.mediaKey).toBeDefined()
+  })
+
+  it('should send a poll message', async () => {
+    const res = await request(app)
+      .post(`/client/sendMessage/${sessionId}`)
+      .set('access-token', MOCK_API_KEY)
+      .send({
+        chatId: TARGET_CHAT_ID,
+        contentType: 'Poll',
+        content: {
+          pollName: 'What is your favorite color?',
+          pollOptions: ['Red', 'Green', 'Blue'],
+          options: { allowMultipleAnswers: false }
+        }
+      })
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.success).toBe(true)
+    expect(res.body.message.type).toBe('poll_creation')
+    expect(res.body.message.pollName).toBe('What is your favorite color?')
+    expect(res.body.message.pollOptions.length).toBe(3)
+  })
+
+  // Anda bisa menambahkan tes untuk mengirim jenis file lain (dokumen, video, dll.) di sini
+
+  afterAll(async () => {
+    // Terminate sesi pengujian
+    await request(app)
+      .get(`/session/terminate/${sessionId}`)
+    await request(app)
+      .get(`/session/terminate/${sessionId}`)
+      .set('access-token', MOCK_API_KEY)
+  })
+})

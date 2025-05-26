@@ -13,6 +13,9 @@ const groupChatController = require('./controllers/groupChatController')
 const messageController = require('./controllers/messageController')
 const contactController = require('./controllers/contactController')
 
+// Apply request logger to all routes
+routes.use(middleware.requestLogger)
+
 /**
  * ================
  * HEALTH ENDPOINTS

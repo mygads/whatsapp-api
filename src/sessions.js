@@ -178,12 +178,12 @@ const initializeEvents = (client, sessionId) => {
       })
     })
 
-  checkIfEventisEnabled('call')
-    .then(_ => {
-      client.on('call', async (call) => {
-        triggerWebhook(sessionWebhook, sessionId, 'call', { call })
-      })
-    })
+  // checkIfEventisEnabled('call')
+  //   .then(_ => {
+  //     client.on('call', async (call) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'call', { call })
+  //     })
+  //   })
 
   checkIfEventisEnabled('change_state')
     .then(_ => {
@@ -199,26 +199,26 @@ const initializeEvents = (client, sessionId) => {
       })
     })
 
-  checkIfEventisEnabled('group_join')
-    .then(_ => {
-      client.on('group_join', (notification) => {
-        triggerWebhook(sessionWebhook, sessionId, 'group_join', { notification })
-      })
-    })
+  // checkIfEventisEnabled('group_join')
+  //   .then(_ => {
+  //     client.on('group_join', (notification) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'group_join', { notification })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('group_leave')
-    .then(_ => {
-      client.on('group_leave', (notification) => {
-        triggerWebhook(sessionWebhook, sessionId, 'group_leave', { notification })
-      })
-    })
+  // checkIfEventisEnabled('group_leave')
+  //   .then(_ => {
+  //     client.on('group_leave', (notification) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'group_leave', { notification })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('group_update')
-    .then(_ => {
-      client.on('group_update', (notification) => {
-        triggerWebhook(sessionWebhook, sessionId, 'group_update', { notification })
-      })
-    })
+  // checkIfEventisEnabled('group_update')
+  //   .then(_ => {
+  //     client.on('group_update', (notification) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'group_update', { notification })
+  //     })
+  //   })
 
   checkIfEventisEnabled('loading_screen')
     .then(_ => {
@@ -277,42 +277,42 @@ const initializeEvents = (client, sessionId) => {
       })
     })
 
-  checkIfEventisEnabled('message_reaction')
-    .then(_ => {
-      client.on('message_reaction', (reaction) => {
-        triggerWebhook(sessionWebhook, sessionId, 'message_reaction', { reaction })
-      })
-    })
+  // checkIfEventisEnabled('message_reaction')
+  //   .then(_ => {
+  //     client.on('message_reaction', (reaction) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'message_reaction', { reaction })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('message_edit')
-    .then(_ => {
-      client.on('message_edit', (message, newBody, prevBody) => {
-        triggerWebhook(sessionWebhook, sessionId, 'message_edit', { message, newBody, prevBody })
-      })
-    })
+  // checkIfEventisEnabled('message_edit')
+  //   .then(_ => {
+  //     client.on('message_edit', (message, newBody, prevBody) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'message_edit', { message, newBody, prevBody })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('message_ciphertext')
-    .then(_ => {
-      client.on('message_ciphertext', (message) => {
-        triggerWebhook(sessionWebhook, sessionId, 'message_ciphertext', { message })
-      })
-    })
+  // checkIfEventisEnabled('message_ciphertext')
+  //   .then(_ => {
+  //     client.on('message_ciphertext', (message) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'message_ciphertext', { message })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('message_revoke_everyone')
-    .then(_ => {
-      // eslint-disable-next-line camelcase
-      client.on('message_revoke_everyone', async (message) => {
-        // eslint-disable-next-line camelcase
-        triggerWebhook(sessionWebhook, sessionId, 'message_revoke_everyone', { message })
-      })
-    })
+  // checkIfEventisEnabled('message_revoke_everyone')
+  //   .then(_ => {
+  //     // eslint-disable-next-line camelcase
+  //     client.on('message_revoke_everyone', async (message) => {
+  //       // eslint-disable-next-line camelcase
+  //       triggerWebhook(sessionWebhook, sessionId, 'message_revoke_everyone', { message })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('message_revoke_me')
-    .then(_ => {
-      client.on('message_revoke_me', async (message) => {
-        triggerWebhook(sessionWebhook, sessionId, 'message_revoke_me', { message })
-      })
-    })
+  // checkIfEventisEnabled('message_revoke_me')
+  //   .then(_ => {
+  //     client.on('message_revoke_me', async (message) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'message_revoke_me', { message })
+  //     })
+  //   })
 
   client.on('qr', (qr) => {
     // inject qr code into session
@@ -330,33 +330,33 @@ const initializeEvents = (client, sessionId) => {
       })
     })
 
-  checkIfEventisEnabled('contact_changed')
-    .then(_ => {
-      client.on('contact_changed', async (message, oldId, newId, isContact) => {
-        triggerWebhook(sessionWebhook, sessionId, 'contact_changed', { message, oldId, newId, isContact })
-      })
-    })
+  // checkIfEventisEnabled('contact_changed')
+  //   .then(_ => {
+  //     client.on('contact_changed', async (message, oldId, newId, isContact) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'contact_changed', { message, oldId, newId, isContact })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('chat_removed')
-    .then(_ => {
-      client.on('chat_removed', async (chat) => {
-        triggerWebhook(sessionWebhook, sessionId, 'chat_removed', { chat })
-      })
-    })
+  // checkIfEventisEnabled('chat_removed')
+  //   .then(_ => {
+  //     client.on('chat_removed', async (chat) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'chat_removed', { chat })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('chat_archived')
-    .then(_ => {
-      client.on('chat_archived', async (chat, currState, prevState) => {
-        triggerWebhook(sessionWebhook, sessionId, 'chat_archived', { chat, currState, prevState })
-      })
-    })
+  // checkIfEventisEnabled('chat_archived')
+  //   .then(_ => {
+  //     client.on('chat_archived', async (chat, currState, prevState) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'chat_archived', { chat, currState, prevState })
+  //     })
+  //   })
 
-  checkIfEventisEnabled('unread_count')
-    .then(_ => {
-      client.on('unread_count', async (chat) => {
-        triggerWebhook(sessionWebhook, sessionId, 'unread_count', { chat })
-      })
-    })
+  // checkIfEventisEnabled('unread_count')
+  //   .then(_ => {
+  //     client.on('unread_count', async (chat) => {
+  //       triggerWebhook(sessionWebhook, sessionId, 'unread_count', { chat })
+  //     })
+  //   })
 }
 
 // Function to delete client session folder
